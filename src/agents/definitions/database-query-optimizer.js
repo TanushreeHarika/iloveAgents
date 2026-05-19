@@ -1,4 +1,4 @@
-const yourAgentName = {
+const databaseQueryOptimizer = {
   id: 'database-query-optimizer',           
   name: 'Database Query Optimizer',
   description: 'This agent takes a SQL query and optional schema context as input and returns an optimized version with an explanation of what changed, what indexes to add, and why the original was slow.',
@@ -7,6 +7,13 @@ const yourAgentName = {
   provider: 'any',              
   defaultProvider: 'openai',    
   model: 'gpt-4o',
+  exampleInputs: {
+    sql_query:
+      'SELECT * FROM orders o JOIN users u ON o.user_id = u.id WHERE YEAR(o.created_at) = 2024 ORDER BY o.total DESC LIMIT 50 OFFSET 5000;',
+    schema_context:
+      'CREATE TABLE products (id UUID PRIMARY KEY, sku TEXT, price NUMERIC, updated_at TIMESTAMP);\nCREATE TABLE inventory (product_id UUID, warehouse_id UUID, quantity INT);',
+    dialect: 'BigQuery',
+  },
   inputs: [
     {
         id: 'sql_query',
@@ -17,10 +24,10 @@ const yourAgentName = {
     },
     {
         id: 'schema_context',
-        label: 'Schema / Table Definitions',
+        label: 'Schema / Table Definitions(optional)',
         type: 'textarea',
         placeholder: 'Paste relevant CREATE TABLE statements or describe your schema...\n\nExample:\nCREATE TABLE orders (id INT PRIMARY KEY, user_id INT, total DECIMAL, created_at DATETIME);\nCREATE TABLE users (id INT PRIMARY KEY, email VARCHAR(255), created_at DATETIME);',
-        required: true,
+        required: false,
     },
     {
         id: 'dialect',
@@ -87,4 +94,4 @@ EDGE CASES:
   outputType: 'markdown',       
 };
 
-export default yourAgentName;
+export default databaseQueryOptimizer;
