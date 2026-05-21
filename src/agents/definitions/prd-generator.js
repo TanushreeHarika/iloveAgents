@@ -1,4 +1,4 @@
-const yourAgentName = {
+const prdGenerator = {
   id: 'prd-generator',           // lowercase, kebab-case, URL safe
   createdAt: '2026-05-21',   // YYYY-MM-DD
   name: 'PRD Generator',
@@ -275,4 +275,4 @@ STYLE:
   outputType: 'markdown',        // markdown | text | json
 };
 
-export default yourAgentName;
+export default prdGenerator;
