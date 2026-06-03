@@ -62,7 +62,7 @@ pull_request_rules:
   - name: Flag unintentional package-lock.json changes
     conditions:
       - "files~=^package-lock\\.json$"
-      - "files!~=^package\\.json$"
+      - "-files~=^package\\.json$"
     actions:
       comment:
         message: |
