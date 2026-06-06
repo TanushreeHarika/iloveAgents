@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import * as Icons from 'lucide-react'
-import agents from '../agents/registry'
+import { useAgents } from '../lib/useAgents'
 
 export default function Sidebar({ open, onClose }) {
   const [sidebarSearchQuery, setSidebarSearchQuery] = useState('')
   const [openCategories, setOpenCategories] = useState({})
   const [searchExpandedCategories, setSearchExpandedCategories] = useState({})
 
+  const { agents } = useAgents()
+
   const isSearching = sidebarSearchQuery.trim() !== ''
 
-  // Reset temporary search expansion state when search clears
   useEffect(() => {
     if (!isSearching) {
       setSearchExpandedCategories({})
@@ -193,7 +194,7 @@ export default function Sidebar({ open, onClose }) {
         </nav>
 
         {/* Footer */}
-        <div className="px-4 py-3 border-t dark:border-border border-gray-200">
+        <div className="mt-auto px-4 py-3 border-t dark:border-border border-gray-200">
           <div className="space-y-1.5">
             <a
               href="https://github.com/AditthyaSS/iloveAgents"

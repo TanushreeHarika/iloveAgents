@@ -20,6 +20,7 @@ import ErrorCard from "./ErrorCard";
 import CharCounter from "./CharCounter";
 import VoiceInput from "./VoiceInput";
 import SuggestedChainPills from "./SuggestedChainPills";
+import RunRating from "./RunRating";
 import { useApiKey } from "../lib/useApiKey";
 import { streamAgent } from "../lib/llmAdapter";
 import { useHistory } from "../lib/useHistory";
@@ -695,6 +696,7 @@ export default function AgentRunner({ agent }) {
             agentName={agent.name}
             systemPrompt={customPrompt}
           />
+          <RunRating />
           <div className="flex justify-end">
             <button
               onClick={handleSendToWorkflow}
