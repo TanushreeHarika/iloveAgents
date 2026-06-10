@@ -5,11 +5,6 @@ on:
   pull_request:
     types: [opened]
 
-permissions:
-  pull-requests: write
-  issues: write
-  contents: read
-
 jobs:
   check-assignment:
     runs-on: ubuntu-latest
