@@ -64,7 +64,7 @@ export default function AgentCard({ agent }) {
   return (
     <Link
       to={`/agent/${agent.id}`}
-      className="group block rounded-lg border p-4 bg-white border-gray-200 
+      className="premium-hover-card group block rounded-lg border p-4 bg-white border-gray-200 
       dark:bg-surface-card dark:border-border
       transition-all duration-500 
       hover:[transform:perspective(1000px)_rotateX(6deg)_rotateY(-6deg)_translateY(-8px)] 
