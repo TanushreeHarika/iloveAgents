@@ -85,8 +85,14 @@ export default function Sidebar({ open, onClose }) {
       {/* Mobile overlay */}
       {open && (
         <div
+          role="button" tabIndex={0} aria-label="Close sidebar"
           className="fixed inset-0 z-30 bg-black/50 lg:hidden"
           onClick={onClose}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+              onClose()
+            }
+          }}  
         />
       )}
 
@@ -104,6 +110,16 @@ export default function Sidebar({ open, onClose }) {
           <span className="text-xs font-bold uppercase tracking-wider dark:text-text-primary text-gray-800">
             Agents
           </span>
+<aside
+  className={`fixed top-14 left-0 bottom-0 z-40 w-60 flex flex-col border-r transition-all duration-200
+    dark:bg-surface dark:border-border bg-white border-gray-200
+    ${open ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}
+>
+  {/* Header */}
+  <div className="px-4 py-3 flex items-center justify-between">
+    <span className="text-xs font-semibold uppercase tracking-wider dark:text-text-muted text-gray-500">
+      Agents
+    </span>
 
           <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-accent/15 text-accent dark:text-accent-hover">
             {filteredAgents.length}
@@ -170,6 +186,47 @@ export default function Sidebar({ open, onClose }) {
               </>
             )}
           </NavLink>
+{/* Agent List */}
+<nav className="flex-1 overflow-y-auto px-2 pb-4">
+  {/* Suites link */}
+  <NavLink
+    to="/suites"
+    onClick={onClose}
+    className={({ isActive }) =>
+      `flex items-center gap-2.5 px-2.5 py-2 rounded-md text-[13px] font-medium transition-colors mb-2
+      ${
+        isActive
+          ? 'bg-accent/10 text-accent dark:text-accent'
+          : 'dark:text-text-secondary dark:hover:text-text-primary dark:hover:bg-surface-hover text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+      }`
+    }
+  >
+    <span className="text-sm">✨</span>
+    <span className="truncate">Suites</span>
+  </NavLink>
+
+  <div className="border-b dark:border-border border-gray-100 mb-2" />
+
+  {categoryOrder.map((category) => {
+    const isCategoryExpanded = isSearching
+      ? (searchExpandedCategories[category] ?? true)
+      : Boolean(openCategories[category])
+
+    return (
+      <div key={category} className="mb-3">
+        <button
+          type="button"
+          onClick={() => toggleCategory(category)}
+          aria-expanded={isCategoryExpanded}
+          className="w-full flex items-center justify-between gap-2 px-2 py-1.5 text-[10px] font-semibold uppercase tracking-widest dark:text-text-muted text-gray-500 hover:text-accent transition-colors"
+        >
+          <span className="flex items-center gap-1.5 min-w-0">
+            <span className="truncate">{category}</span>
+
+            <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-accent/10 text-accent tracking-normal">
+              {categories[category].length}
+            </span>
+          </span>
 
           <div className="border-b dark:border-border border-gray-100 mb-2" />
 
@@ -267,6 +324,12 @@ export default function Sidebar({ open, onClose }) {
             </div>
           )}
         </nav>
+  {filteredAgents.length === 0 && (
+    <div className="px-4 py-8 text-center text-xs text-gray-500 dark:text-text-muted">
+      No agents found
+    </div>
+  )}
+</nav>
 
         {/* Footer */}
         <div className="mt-auto px-4 py-3 border-t dark:border-border border-gray-200">
@@ -276,6 +339,7 @@ export default function Sidebar({ open, onClose }) {
               target="_blank"
               rel="noopener noreferrer"
               className="block text-[11px] dark:text-text-secondary text-gray-500 hover:text-accent transition-colors font-medium"
+              className="block text-[11px] dark:text-text-muted text-gray-500 hover:text-accent transition-colors"
             >
               GitHub →
             </a>
@@ -285,11 +349,13 @@ export default function Sidebar({ open, onClose }) {
               target="_blank"
               rel="noopener noreferrer"
               className="block text-[11px] dark:text-text-secondary text-gray-500 hover:text-accent transition-colors font-medium"
+              className="block text-[11px] dark:text-text-muted text-gray-500 hover:text-accent transition-colors"
             >
               Contribute →
             </a>
 
             <span className="block text-[10px] dark:text-text-secondary/70 text-gray-400 font-medium">
+            <span className="block text-[10px] dark:text-text-muted/60 text-gray-400">
               GSSoC 2026
             </span>
           </div>
